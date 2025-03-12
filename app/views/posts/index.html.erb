@@ -1,0 +1,12 @@
+<h1>Available Products</h1>
+<% if current_user&.admin? %>
+  <%= link_to "New Post", new_post_path, class: "btn btn-primary" %>
+<% end %>
+<% @posts.each do |post| %>
+  <div class="post">
+    <h2><%= post.title %></h2>
+    <p><%= post.description %></p>
+    <p><strong>Buy here:</strong> <a href="<%= post.purchase_link %>" target="_blank">Purchase Link</a></p>
+  </div>
+  <hr>
+<% end %>
