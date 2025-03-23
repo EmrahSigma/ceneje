@@ -7,7 +7,7 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Set up working directory for the Rails app
 WORKDIR /rails
-RUN chmod -R +x /path/to/your/repo
+
 # Install base packages for Rails and dependencies
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -32,7 +32,7 @@ ENV RAILS_ENV="production" \
 FROM base AS build
 
 # Copy the Gemfile and Gemfile.lock to install dependencies
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./ 
 
 # Install Ruby gems
 RUN bundle install && \
@@ -59,10 +59,12 @@ COPY --from=build /rails /rails
 # Create a non-root user to run the app securely
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails /rails && \
+    chown -R rails:rails /rails/db /rails/log /rails/storage /rails/tmp && \
+    chmod -R 755 /rails/db /rails/log /rails/storage /rails/tmp /rails/bin
 
 # Switch to the non-root user
-USER 1000:1000
+USER rails:rails
 
 # Set the entrypoint to prepare the database
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
