@@ -1,0 +1,8 @@
+<h1>Welcome to Ceneje!</h1>
+<h2>Our Products:</h2>
+
+<ul>
+  <% @products.each do |product| %>
+    <li><%= product.name %> - <%= product.price %></li>
+  <% end %>
+</ul>
