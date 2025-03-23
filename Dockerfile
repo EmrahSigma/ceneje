@@ -7,7 +7,7 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Set up working directory for the Rails app
 WORKDIR /rails
-
+RUN chmod -R +x /path/to/your/repo
 # Install base packages for Rails and dependencies
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
