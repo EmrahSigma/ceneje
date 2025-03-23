@@ -1,8 +1,41 @@
 <h1>Welcome to Ceneje!</h1>
 <h2>Our Products:</h2>
 
-<ul>
-  <% @products.each do |product| %>
-    <li><%= product.name %> - <%= product.price %></li>
-  <% end %>
-</ul>
+<% @posts.each do |post| %>
+  <div class="post">
+    <!-- Post Title -->
+    <h3><%= post.title %></h3>
+
+    <!-- Post Image -->
+    <img src="<%= post.image_url %>" alt="<%= post.title %>" style="max-width: 200px; height: auto;">
+
+    <!-- Post Description and Price -->
+    <p><%= post.description %></p>
+    <p><strong>Price:</strong> <%= post.price %></p>
+
+    <!-- Links to Webstores -->
+    <h4>Check Out the Webstores:</h4>
+    <ul>
+      <% post.webstore_links.each do |link| %>
+        <li><a href="<%= link.url %>" target="_blank"><%= link.name %> - <%= link.price %></a></li>
+      <% end %>
+    </ul>
+
+    <!-- Comments Section -->
+    <h4>Comments:</h4>
+    <ul>
+      <% post.comments.each do |comment| %>
+        <li><strong><%= comment.user.name %>:</strong> <%= comment.body %></li>
+      <% end %>
+    </ul>
+
+    <!-- Comment Form (if applicable for users to add comments) -->
+    <%= form_with(model: [post, post.comments.build], local: true) do |form| %>
+      <div>
+        <%= form.label :body, "Add your comment:" %>
+        <%= form.text_area :body, rows: 3 %>
+      </div>
+      <%= form.submit "Post Comment" %>
+    <% end %>
+  </div>
+<% end %>
