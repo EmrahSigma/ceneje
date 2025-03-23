@@ -1,41 +1,61 @@
-<h1>Welcome to Ceneje!</h1>
-<h2>Our Products:</h2>
-
-<% @posts.each do |post| %>
-  <div class="post">
-    <!-- Post Title -->
-    <h3><%= post.title %></h3>
-
-    <!-- Post Image -->
-    <img src="<%= post.image_url %>" alt="<%= post.title %>" style="max-width: 200px; height: auto;">
-
-    <!-- Post Description and Price -->
-    <p><%= post.description %></p>
-    <p><strong>Price:</strong> <%= post.price %></p>
-
-    <!-- Links to Webstores -->
-    <h4>Check Out the Webstores:</h4>
-    <ul>
-      <% post.webstore_links.each do |link| %>
-        <li><a href="<%= link.url %>" target="_blank"><%= link.name %> - <%= link.price %></a></li>
-      <% end %>
-    </ul>
-
-    <!-- Comments Section -->
-    <h4>Comments:</h4>
-    <ul>
-      <% post.comments.each do |comment| %>
-        <li><strong><%= comment.user.name %>:</strong> <%= comment.body %></li>
-      <% end %>
-    </ul>
-
-    <!-- Comment Form (if applicable for users to add comments) -->
-    <%= form_with(model: [post, post.comments.build], local: true) do |form| %>
-      <div>
-        <%= form.label :body, "Add your comment:" %>
-        <%= form.text_area :body, rows: 3 %>
-      </div>
-      <%= form.submit "Post Comment" %>
+<!-- Navbar -->
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa;">
+  <h1>Welcome to Ceneje!</h1>
+  
+  <div>
+    <% if user_signed_in? %>
+      <span>Welcome, <%= current_user.email %>! </span>
+      <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to "Sign In", new_user_session_path, class: "btn btn-success" %>
     <% end %>
   </div>
+</div>
+
+<!-- Form for Admins to Create a Post -->
+<h2>Create a New Post</h2>
+<%= form_with model: @post, url: home_create_path, local: true, html: { multipart: true } do |form| %>
+  <div>
+    <%= form.label :title, "Product Name" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :description, "Product Description" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :price, "Price ($)" %>
+    <%= form.number_field :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= form.label :image, "Upload Image" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <%= form.submit "Create Post" %>
 <% end %>
+
+<!-- Display All Posts -->
+<h2>Latest Products:</h2>
+<% @posts.each do |post| %>
+  <div class="post">
+    <h3><%= post.title %></h3>
+
+    <% if post.image.attached? %>
+      <%= image_tag post.image, style: "max-width: 200px; height: auto;" %>
+    <% end %>
+
+    <p><strong>Description:</strong> <%= post.description %></p>
+    <p><strong>Price:</strong> $<%= post.price %></p>
+    
+    <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+
+  
+    <hr>
+  </div>
+<% end %>
+
