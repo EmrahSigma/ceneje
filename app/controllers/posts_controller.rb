@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     @comment = Comment.new # New comment form
   end
   
-
+  
   def edit
   end
 
