@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   # Root path route ("/")
   root "home#index"
-  resources :posts, only: [:create, :destroy]
+  resources :posts, only: [:edit, :update, :destroy]
   # Health check route
   get "up" => "rails/health#show", as: :rails_health_check
 

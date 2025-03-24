@@ -1,0 +1,47 @@
+<h2>Registracija</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <div>
+    <%= f.label :ime, "Ime" %>
+    <%= f.text_field :ime %>
+  </div>
+
+  <div>
+    <%= f.label :priimek, "Priimek" %>
+    <%= f.text_field :priimek %>
+  </div>
+
+  <div>
+    <%= f.label :telefonska_stevilka, "Telefonska Številka" %>
+    <%= f.text_field :telefonska_stevilka %>
+  </div>
+
+  <div>
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :naslov, "Naslov" %>
+    <%= f.text_field :naslov %>
+  </div>
+
+  <div>
+    <%= f.label :mesto, "Mesto" %>
+    <%= f.text_field :mesto %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Geslo" %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, "Potrdi Geslo" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <%= f.submit "Registriraj se", class: "btn btn-primary" %>
+<% end %>
+
+<%= render "devise/shared/links" %>

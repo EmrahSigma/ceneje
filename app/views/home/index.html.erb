@@ -1,61 +1,60 @@
-<!-- Navbar -->
-<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa;">
-  <h1>Welcome to Ceneje!</h1>
-  
-  <div>
-    <% if user_signed_in? %>
-      <span>Welcome, <%= current_user.email %>! </span>
-      <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
-    <% else %>
-      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
-      <%= link_to "Sign In", new_user_session_path, class: "btn btn-success" %>
-    <% end %>
-  </div>
+<!-- ADMIN Banner with Background & Spacing -->
+<div class="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 text-white text-center py-6 text-3xl font-bold shadow-md uppercase tracking-widest mt-16">
+  ADMIN
 </div>
 
 <!-- Form for Admins to Create a Post -->
-<h2>Create a New Post</h2>
-<%= form_with model: @post, url: home_create_path, local: true, html: { multipart: true } do |form| %>
-  <div>
-    <%= form.label :title, "Product Name" %>
-    <%= form.text_field :title %>
-  </div>
+<div class="container mx-auto my-8 bg-white shadow-lg p-6 rounded-lg">
+  <h2 class="text-2xl font-bold text-center mb-4">Create a New Post</h2>
+  
+  <%= form_with model: @post, url: home_create_path, local: true, html: { multipart: true }, class: "max-w-lg mx-auto space-y-4" do |form| %>
+    <div>
+      <%= form.label :title, "Product Name", class: "block text-gray-700 font-semibold" %>
+      <%= form.text_field :title, class: "w-full border border-gray-300 rounded-lg p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :description, "Product Description" %>
-    <%= form.text_area :description %>
-  </div>
+    <div>
+      <%= form.label :description, "Product Description", class: "block text-gray-700 font-semibold" %>
+      <%= form.text_area :description, class: "w-full border border-gray-300 rounded-lg p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :price, "Price ($)" %>
-    <%= form.number_field :price, step: 0.01 %>
-  </div>
+    <div>
+      <%= form.label :price, "Price ($)", class: "block text-gray-700 font-semibold" %>
+      <%= form.number_field :price, step: 0.01, class: "w-full border border-gray-300 rounded-lg p-2" %>
+    </div>
 
-  <div>
-    <%= form.label :image, "Upload Image" %>
-    <%= form.file_field :image %>
-  </div>
+    <div>
+      <%= form.label :image, "Upload Image", class: "block text-gray-700 font-semibold" %>
+      <%= form.file_field :image, class: "w-full border border-gray-300 rounded-lg p-2" %>
+    </div>
 
-  <%= form.submit "Create Post" %>
-<% end %>
+    <%= form.submit "Create Post", class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md" %>
+  <% end %>
+</div>
 
 <!-- Display All Posts -->
-<h2>Latest Products:</h2>
-<% @posts.each do |post| %>
-  <div class="post">
-    <h3><%= post.title %></h3>
+<div class="container mx-auto my-8">
+  <h2 class="text-2xl font-bold text-center mb-4">Latest Products:</h2>
 
-    <% if post.image.attached? %>
-      <%= image_tag post.image, style: "max-width: 200px; height: auto;" %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @posts.each do |post| %>
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-bold mb-2"><%= post.title %></h3>
+
+        <% if post.image.attached? %>
+          <%= image_tag post.image, class: "w-full h-40 object-cover rounded-lg mb-2" %>
+        <% end %>
+
+        <p class="text-gray-700"><strong>Description:</strong> <%= post.description %></p>
+        <p class="text-gray-700 font-bold"><strong>Price:</strong> $<%= post.price %></p>
+
+        <!-- Buttons: Edit & Delete -->
+        <div class="flex space-x-4 mt-4">
+          <%= link_to "Edit", edit_post_path(post), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
+          <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+        </div>
+      </div>
     <% end %>
-
-    <p><strong>Description:</strong> <%= post.description %></p>
-    <p><strong>Price:</strong> $<%= post.price %></p>
-    
-    <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-
-  
-    <hr>
   </div>
-<% end %>
+</div>
 
