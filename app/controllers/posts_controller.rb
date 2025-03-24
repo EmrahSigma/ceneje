@@ -1,5 +1,12 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
+  def show
+    @post = Post.find(params[:id]) # Find the post
+    @comments = @post.comments # Get all comments for this post
+    @comment = Comment.new # New comment form
+  end
+  
 
   def edit
   end

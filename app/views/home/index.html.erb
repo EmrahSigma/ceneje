@@ -39,22 +39,21 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @posts.each do |post| %>
       <div class="bg-white shadow-lg rounded-lg p-6">
-        <h3 class="text-xl font-bold mb-2"><%= post.title %></h3>
+        <h3 class="text-xl font-bold mb-2">
+          <%= link_to post.title, post_path(post), class: "text-blue-600 hover:underline" %>
+        </h3>
 
         <% if post.image.attached? %>
-          <%= image_tag post.image, class: "w-full h-40 object-cover rounded-lg mb-2" %>
+          <%= link_to post_path(post) do %>
+            <%= image_tag post.image, class: "w-full h-40 object-cover rounded-lg mb-2" %>
+          <% end %>
         <% end %>
 
         <p class="text-gray-700"><strong>Description:</strong> <%= post.description %></p>
         <p class="text-gray-700 font-bold"><strong>Price:</strong> $<%= post.price %></p>
-
-        <!-- Buttons: Edit & Delete -->
-        <div class="flex space-x-4 mt-4">
-          <%= link_to "Edit", edit_post_path(post), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
-          <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
-        </div>
+        
+        <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
     <% end %>
   </div>
 </div>
-

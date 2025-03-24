@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
+
   # Root path route ("/")
   root "home#index"
-  resources :posts, only: [:edit, :update, :destroy]
+
+  # Posts routes (including show, edit, update, destroy)
+  resources :posts, only: [:show, :edit, :update, :destroy] do
+    resources :comments, only: [:create, :destroy]  # Nested comments inside posts
+  end
+
   # Health check route
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -12,7 +18,4 @@ Rails.application.routes.draw do
   # Routes for creating posts
   get "home/new", to: "home#new", as: "home_new"  # Show the form
   post "home/create", to: "home#create", as: "home_create"  # Handle form submission
-
-  # Post actions
-
 end
