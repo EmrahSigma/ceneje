@@ -51,7 +51,7 @@
 
         <p class="text-gray-700"><strong>Description:</strong> <%= post.description %></p>
         <p class="text-gray-700 font-bold"><strong>Price:</strong> $<%= post.price %></p>
-        
+        <%= link_to "Edit", edit_post_path(post), class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
         <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
       </div>
     <% end %>

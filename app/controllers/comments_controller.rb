@@ -1,17 +1,17 @@
 class CommentsController < ApplicationController
     before_action :authenticate_user!
   
-    def create
-      @post = Post.find(params[:post_id])
-      @comment = @post.comments.build(comment_params)
-      @comment.user = current_user
-  
-      if @comment.save
-        redirect_to root_path, notice: "Comment added successfully!"
-      else
-        redirect_to root_path, alert: "Error adding comment."
-      end
-    end
+def create
+  @post = Post.find(params[:post_id])
+  @comment = @post.comments.build(comment_params)
+  @comment.user = current_user
+
+  if @comment.save
+    redirect_to post_path(@post), notice: "Comment added successfully!"
+  else
+    redirect_to post_path(@post), alert: "Error adding comment."
+  end
+end
   
     def destroy
       @comment = Comment.find(params[:id])
