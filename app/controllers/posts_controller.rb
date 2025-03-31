@@ -1,12 +1,13 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user! 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:edit, :update, :destroy]
 
   def show
-    @post = Post.find(params[:id]) # Find the post
-    @comments = @post.comments # Get all comments for this post
-    @comment = Comment.new # New comment form
+    @post = Post.find(params[:id])
+    @comments = @post.comments
+    @comment = Comment.new
   end
-  
   
   def edit
   end

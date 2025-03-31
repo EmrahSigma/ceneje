@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user! 
   def index
     @posts = Post.all # Fetch all posts
     @post = Post.new  # Initialize a new post for the form
