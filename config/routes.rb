@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "contact_support/new"
+  get "contact_support/create"
   devise_for :users
 
   # Root path route ("/")
@@ -18,4 +20,6 @@ Rails.application.routes.draw do
   # Routes for creating posts
   get "home/new", to: "home#new", as: "home_new"  # Show the form
   post "home/create", to: "home#create", as: "home_create"  # Handle form submission
+  resources :contact_support, only: [:new, :create]
+  post "contact_support/send", to: "contact_support#send_email", as: :contact_support_send
 end

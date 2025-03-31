@@ -47,6 +47,11 @@
   <main class="container mx-auto px-5">
     <%= yield %>
   </main>
-  
+  <!-- Footer Section -->
+<div class="bg-black py-6 mt-8">
+  <div class="container mx-auto text-center">
+    <%= link_to "Contact support", new_contact_support_path, class: "bg-white text-black px-8 py-3 text-xl font-semibold rounded" %>
+  </div>
+</div>
   </body>
 </html>
