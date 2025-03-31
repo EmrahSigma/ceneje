@@ -10,6 +10,11 @@ class HomeController < ApplicationController
     end
   end
 
+  def most_viewed
+    # Fetch products with 5 or more views
+    @most_viewed_posts = Post.where("views >= ?", 5)
+  end
+  
   def create
     @post = Post.new(post_params)
 

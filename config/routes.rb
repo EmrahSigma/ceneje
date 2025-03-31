@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Root path route ("/")
   root "home#index"
-
+  get 'most_viewed', to: 'home#most_viewed', as: 'most_viewed_products'
   # Posts routes (including show, edit, update, destroy)
   resources :posts, only: [:show, :edit, :update, :destroy] do
     resources :comments, only: [:create, :destroy]  # Nested comments inside posts

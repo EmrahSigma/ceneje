@@ -1,0 +1,22 @@
+<div class="container mx-auto my-8">
+  <h2 class="text-2xl font-bold text-center mb-4">Most Viewed Products (5+ views):</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @most_viewed_posts.each do |post| %>
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-xl font-bold mb-2">
+          <%= link_to post.title, post_path(post), class: "text-blue-600 hover:underline" %>
+        </h3>
+
+        <% if post.image.attached? %>
+          <%= link_to post_path(post) do %>
+            <%= image_tag post.image, class: "w-full h-40 object-cover rounded-lg mb-2" %>
+          <% end %>
+        <% end %>
+
+        <p class="text-gray-700"><strong>Description:</strong> <%= post.description %></p>
+        <p class="text-gray-700 font-bold"><strong>Price:</strong> $<%= post.price %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
