@@ -1,8 +1,13 @@
 class HomeController < ApplicationController
   before_action :authenticate_user! 
   def index
-    @posts = Post.all # Fetch all posts
-    @post = Post.new  # Initialize a new post for the form
+    @post = Post.new
+    if params[:search].present?
+      search_term = "%#{params[:search]}%"
+      @posts = Post.where("title LIKE ? OR description LIKE ?", search_term, search_term)
+    else
+      @posts = Post.all
+    end
   end
 
   def create
@@ -25,5 +30,4 @@ class HomeController < ApplicationController
     params.require(:post).permit(:title, :description, :price, :image) # Use :image instead of :image_url
   end
 
-  
 end
