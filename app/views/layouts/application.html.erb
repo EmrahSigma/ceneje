@@ -20,21 +20,20 @@
 
   <body class="bg-gray-200">
     <!-- Navbar with Sexy Background -->
-    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-900 via-purple-700 to-pink-700 shadow-xl py-4 px-6 flex items-center justify-between z-50">
-    <!-- Left side: Logo -->
-    <div class="flex justify-between items-center py-4">
-    <%= link_to "Ceneje", root_path, class: "text-2xl font-bold text-white" %>
-     <%= link_to "The most viewed", most_viewed_products_path, class: "text-2xl font-bold text-yellow-500 hover:text-yellow-700 ml-[20px]" %>
-  </div>
+    <nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-900 via-purple-700 to-pink-700 shadow-xl py-4 px-6 flex flex-wrap items-center justify-between z-50">
+    <!-- Left side: Logo and Most Viewed -->
+    <div class="flex items-center space-x-4">
+      <%= link_to "Ceneje", root_path, class: "text-2xl font-bold text-white whitespace-nowrap" %>
+      <%= link_to "The most viewed", most_viewed_products_path, class: "text-2xl font-bold text-yellow-500 hover:text-yellow-700 ml-4 whitespace-nowrap" %>
+    </div>
   
-  
-    <!-- Right side: User authentication -->
-    <div>
+    <!-- Right side: Authentication Buttons -->
+    <div class="flex space-x-2">
       <% if user_signed_in? %>
-        <span class="mr-4 text-white font-semibold">Welcome, <%= current_user.ime %>!</span>
+        <span class="hidden sm:inline text-white font-semibold">Welcome, <%= current_user.ime %>!</span>
         <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 shadow-md" %>
       <% else %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-500 text-white px-4 py-2 rounded-md mx-2 hover:bg-blue-700 shadow-md" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 shadow-md" %>
         <%= link_to "Sign In", new_user_session_path, class: "bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 shadow-md" %>
       <% end %>
     </div>
